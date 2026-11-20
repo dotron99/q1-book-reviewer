@@ -1,0 +1,21 @@
+# Keep case materials and generated outputs out of the public package.
+private/
+inputs/
+outputs/
+artifacts/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+*.pem
+*.key
+*.pdf
+*.txt
+!requirements.txt
+*.docx
+!skills/q1-book-reviewer/assets/review-template.docx
+*.xlsx
+*.pkl
+*.zip

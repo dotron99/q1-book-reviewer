@@ -1,0 +1,4 @@
+interface:
+  display_name: "Q1 Book Reviewer"
+  short_description: "Evidence-led scholarly book reviews and Word checks"
+  default_prompt: "Use $q1-book-reviewer to prepare a source-grounded scholarly book review in my chosen journal style."

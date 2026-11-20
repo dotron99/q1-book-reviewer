@@ -1,0 +1,32 @@
+{
+  "book_title": "[[TODO: exact book title and subtitle]]",
+  "bibliographic_header": "[[TODO: verified author, title, publisher, year, pagination and identifiers]]",
+  "review_paragraphs": [
+    "[[TODO: opening intellectual problem and overall assessment]]",
+    "[[TODO: scope, method and structure]]",
+    "[[TODO: specific contribution with verified page references]]",
+    "[[TODO: strongest case or evidence]]",
+    "[[TODO: further strength or qualification]]",
+    "[[TODO: central critical issue and source context]]",
+    "[[TODO: counterexamples and fair alternative reading]]",
+    "[[TODO: scholarly positioning; add verified references if used]]",
+    "[[TODO: implications for the field]]",
+    "[[TODO: proportionate limitations]]",
+    "[[TODO: readership and practical value]]",
+    "[[TODO: final evaluative judgement]]"
+  ],
+  "references": [
+    "[[TODO: verified reference entries for outside works cited; use an empty list if none are used]]"
+  ],
+  "declarations": {
+    "Disclosure statement": "[[TODO: author-confirmed competing interests for this review]]",
+    "Funding": "[[TODO: author-confirmed funding for this review]]",
+    "Generative AI statement": "[[TODO: accurate tool identity and actual scope of assistance under the journal policy]]"
+  },
+  "author": {
+    "name": "[[TODO: reviewer name]]",
+    "affiliation": "[[TODO: confirmed affiliation]]",
+    "email": "[[TODO: correspondence if required]]",
+    "orcid": "[[TODO: ORCID if required]]"
+  }
+}
