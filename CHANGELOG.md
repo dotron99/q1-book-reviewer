@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added `install.sh` and `install.ps1`, with a one-line install in the README.
+- The installer detects Claude Code, Codex, Cursor, Gemini CLI and GitHub Copilot and installs the skill for each tool it finds.
+
 ## 0.1.0 — local release candidate
 
 - Added the `q1-book-reviewer` skill and supporting reading, writing and quality guidance.

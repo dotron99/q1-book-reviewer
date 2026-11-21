@@ -29,7 +29,7 @@ Run these only **inside this directory** when ready. They are instructions, not 
 
 ```sh
 git init
-git add README.md LICENSE CITATION.cff CHANGELOG.md ATTRIBUTION.md CONTRIBUTING.md GITHUB_SHARING_CHECKLIST.md requirements.txt .gitignore .github skills scripts tests evals
+git add README.md LICENSE CITATION.cff CHANGELOG.md ATTRIBUTION.md CONTRIBUTING.md GITHUB_SHARING_CHECKLIST.md requirements.txt .gitignore .github skills scripts tests evals install.sh install.ps1
 git diff --cached --stat
 git diff --cached
 ```

@@ -13,22 +13,149 @@ A reusable, evidence-led workflow for scholarly book reviews. It supports close 
 
 No book text, publisher PDF, unpublished review, correspondence, personal contact details or API keys are included. Everything needed to apply the workflow is here; the user supplies a book they may lawfully use, the journal brief and any style reference locally.
 
-## Install
+## Installation
 
-The skill itself is `skills/q1-book-reviewer/`. Copy that **whole directory**, including its references, scripts and assets, into the skills location supported by your agent. For a local Codex setup using the personal `.codex/skills` directory:
+macOS or Linux:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/dotron99/q1-book-reviewer/main/install.sh | bash
+```
+
+Windows (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/dotron99/q1-book-reviewer/main/install.ps1 | iex
+```
+
+The script looks for Claude Code, Codex, Cursor, Gemini CLI and GitHub Copilot on your machine and installs the skill for each one it finds. It does not need administrator rights and does not use sudo. If none of those tools are detected, it installs to the standard Claude Code and Codex personal folders so the skill is ready when you start using them. Start a new session afterwards.
+
+From a local clone you can run `./install.sh` or `.\install.ps1` instead. Add `--symlink` (or `-Symlink` on Windows) if you want the installed skill to point at the checkout. Re-run the same command after `git pull` to update.
+
+### What gets installed where
+
+The installer puts a copy in the personal folder each detected tool actually reads:
+
+| Tool | Personal skill folder |
+| --- | --- |
+| Claude Code | `~/.claude/skills/` (or `$CLAUDE_CONFIG_DIR/skills` if that variable is set). On Windows this is `%USERPROFILE%\.claude\skills`. |
+| Codex | `~/.agents/skills/` (the current official personal path) |
+| Cursor | `~/.cursor/skills/` and `~/.agents/skills/` |
+| Gemini CLI | `~/.agents/skills/` (official user-skill alias; a separate `~/.gemini/skills/` copy is not required) |
+| GitHub Copilot | `~/.copilot/skills/` |
+
+Older Codex builds also load `~/.codex/skills` (or `$CODEX_HOME/skills` if that variable is set). Current Codex documentation recommends `~/.agents/skills`. To install to the older path as well, run `./install.sh --legacy-codex`. Do not install to both Codex paths unless you still need the older one, because current Codex may list the skill twice.
+
+This repository is a standalone skill package, not a published marketplace plugin.
+
+### Quick start
+
+After installation, start a new session. In Claude Code or Cursor:
+
+```text
+/q1-book-reviewer
+```
+
+In Codex:
+
+```text
+$q1-book-reviewer
+```
+
+Example request:
+
+> Use /q1-book-reviewer to assess this book and draft a review for my chosen journal. Use my accepted review as the style reference. Save a new version; show unresolved items in red.
+
+The host needs local file access and suitable document or PDF tools for reading and rendering. The helper scripts use Python 3.10+ and `python-docx`. They make no network requests and do not require API keys. The skill can guide a review without the helpers when equivalent tools are available.
+
+### Manual install
+
+If you prefer not to run the script, copy the whole `skills/q1-book-reviewer` directory, including its references, scripts and assets, into the folder for your tool. Replace an existing `q1-book-reviewer` folder rather than merging two versions.
+
+Claude Code, macOS or Linux:
+
+```sh
+mkdir -p ~/.claude/skills
+cp -R skills/q1-book-reviewer ~/.claude/skills/
+```
+
+Claude Code, Windows (PowerShell):
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills" | Out-Null
+Copy-Item -Recurse -Force skills\q1-book-reviewer "$env:USERPROFILE\.claude\skills\q1-book-reviewer"
+```
+
+Codex (current path), macOS or Linux:
+
+```sh
+mkdir -p ~/.agents/skills
+cp -R skills/q1-book-reviewer ~/.agents/skills/
+```
+
+Codex (current path), Windows (PowerShell):
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills" | Out-Null
+Copy-Item -Recurse -Force skills\q1-book-reviewer "$env:USERPROFILE\.agents\skills\q1-book-reviewer"
+```
+
+Codex (older path, still recognised):
 
 ```sh
 mkdir -p ~/.codex/skills
 cp -R skills/q1-book-reviewer ~/.codex/skills/
 ```
 
-Check for an existing directory first; do not merge over a different version. Reload skills in your host if required. This repository is a standalone skill package, not a published marketplace plugin.
+Cursor:
 
-Invoke it with a request such as:
+```sh
+mkdir -p ~/.cursor/skills
+cp -R skills/q1-book-reviewer ~/.cursor/skills/
+```
 
-> Use $q1-book-reviewer to assess this book and draft a review for my chosen journal. Use my accepted review as the style reference. Save a new version; show unresolved items in red.
+Gemini CLI:
 
-The host needs local file access and suitable document/PDF tools for reading and rendering. The helper scripts use Python 3.10+ and `python-docx`. They make no network requests and do not require API keys. The skill can guide a review without the helpers when equivalent tools are available.
+```sh
+mkdir -p ~/.gemini/skills
+cp -R skills/q1-book-reviewer ~/.gemini/skills/
+```
+
+GitHub Copilot:
+
+```sh
+mkdir -p ~/.copilot/skills
+cp -R skills/q1-book-reviewer ~/.copilot/skills/
+```
+
+Reload skills in your host if it does not pick up the new folder until a new session.
+
+### Uninstall and update
+
+To update from a clone, pull the latest files and run the installer again. To update with the one-liner, run the same `curl` or `irm` command again.
+
+To uninstall on macOS or Linux:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/dotron99/q1-book-reviewer/main/install.sh | bash -s -- --uninstall
+```
+
+From a clone, `./install.sh --uninstall` does the same. On Windows, from a clone, run `.\install.ps1 -Uninstall`. From the one-liner:
+
+```powershell
+$Q1BookReviewerUninstall = $true; irm https://raw.githubusercontent.com/dotron99/q1-book-reviewer/main/install.ps1 | iex
+```
+
+You can also delete the `q1-book-reviewer` folder from the personal skill directory listed above. The installer only removes this skill; it does not delete your Claude, Codex or other config.
+
+### Troubleshooting
+
+- The skill does not appear: start a new session, then check that `SKILL.md` is at `.../skills/q1-book-reviewer/SKILL.md` for the tool you are using. Cursor Cloud Agents only sync `~/.cursor/skills/`, not `~/.agents/skills/`.
+- The one-liner always downloads the `main` branch. If you are testing a fork or another branch, clone that branch and run `./install.sh` instead.
+- One tool was skipped: the installer only writes to folders for tools it can detect (the app or CLI is on your PATH, or that tool's config folder already exists in your home directory). Run `./install.sh --all` to install for every supported tool.
+- Windows would not create a symlink: a copy is installed instead. Creating symlinks on Windows may need Developer Mode. The default one-liner already copies, so this only matters with `-Symlink`.
+- Permission errors: the script never uses sudo and only writes under your home directory. Check that your home folder is writable.
+- Helper scripts fail: install Python 3.10+ and the packages in `requirements.txt`. See "Try the Word tools" below.
+- Current Codex lists the skill twice: you probably also have a copy in `~/.codex/skills`. Remove the older copy, or keep only one of the two Codex folders.
 
 ## Try the Word tools
 
